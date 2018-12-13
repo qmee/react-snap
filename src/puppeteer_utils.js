@@ -15,6 +15,7 @@ const handleThirdPartyRequests = async opt => {
   if (!options.skipThirdPartyRequests || !options.proxy) return;
   await page.setRequestInterception(true);
   page.on("request", request => {
+    console.log('on.request', request.url());
     if (options.proxy) {
       for (proxyUrl in options.proxy) {
         if (request.url().startsWith(proxyUrl)) {
@@ -22,6 +23,7 @@ const handleThirdPartyRequests = async opt => {
           if (typeof options.proxy[proxyUrl] === 'string') {
             requestChanges.url = request.url().replace(proxyUrl, options.proxy[proxyUrl]);
           }
+          console.log('request continuining');
           request.continue(requestChanges);
           return;
         }
@@ -33,6 +35,7 @@ const handleThirdPartyRequests = async opt => {
       return;
     }
 
+    console.log('request default continue');
     request.continue();
   });
 };
@@ -49,6 +52,8 @@ const enableLogging = opt => {
     onError && onError();
   });
   page.on("pageerror", e => {
+    console.log('PAGEERROR - page', page);
+    console.log('PAGEERROR - error', error);
     if (options.sourceMaps) {
       mapStackTrace(e.stack, {
         isChromeOrEdge: true,
@@ -201,6 +206,7 @@ const crawl = async opt => {
         await page.close();
         console.log(`🕸  (${processed + 1}/${enqued}) ${route}`);
       } catch (e) {
+        console.log('crawl caught error', e);
         if (!shuttingDown) {
           console.log(`🔥  ${route} ${e}`);
         }
