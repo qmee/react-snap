@@ -52,8 +52,8 @@ const enableLogging = opt => {
     onError && onError();
   });
   page.on("pageerror", e => {
-    console.log('PAGEERROR - page', page);
-    console.log('PAGEERROR - error', error);
+    console.log('PAGEERROR page', page);
+    console.log('PAGEERROR error', e);
     if (options.sourceMaps) {
       mapStackTrace(e.stack, {
         isChromeOrEdge: true,
