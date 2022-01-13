@@ -18,7 +18,7 @@
     "html-minifier": "^3.5.5",
     "minimalcss": "^0.6.3",
     "mkdirp": "^0.5.1",
-    "puppeteer": "^1.0.0",
+    "puppeteer": "^1.20.0",
     "serve-static": "^1.13.1",
     "sourcemapped-stacktrace-node": "^2.1.6"
   },
